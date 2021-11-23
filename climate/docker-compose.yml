@@ -1,0 +1,23 @@
+# https://docs.docker.com/compose/gettingstarted/
+# https://docs.docker.com/compose/environment-variables/
+
+version: "3.3"
+services:
+  web:
+    build: .
+    environment:
+      APP_RUN_DELAY: "10000"
+      SQLSERVER: "Server=db;User Id=sa;Password=Mypassword12345*;Encrypt=false;Trusted_Connection=False;"
+      WEATHER_KEY_API: "a7755af4a16dd20bba3ce4166cffc018"
+      NEWS_KEY_API: "97fd826a38004befbadef494cd9cc8fc"
+    ports:
+      - "3000:80"
+    depends_on:
+      - db
+  db:
+    image: "mcr.microsoft.com/mssql/server:2019-CU13-ubuntu-20.04"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Mypassword12345*"
+    ports:
+      - "1433:1433"
