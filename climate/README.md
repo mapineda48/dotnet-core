@@ -4,16 +4,9 @@ This project is a developer technical test.
 
 ## Usage
 
-### docker-compose (recommended)
+### docker-compose
 
-- Make sure to have [docker-compose](https://docs.docker.com/compose/install/) installed.
-
-- Create file called `docker-compose.yml`
-
-```sh
-touch docker-compose.yml
-```
-- Open this file with your favorite text editor and paste
+Do not complicate configuring an environment to run the application, this demo has a [container](https://hub.docker.com/r/mapineda48/climate) available in [dockerhub](https://hub.docker.com/), the only thing you should have installed on your pc is [docker-compose](https://docs.docker.com/compose/), create a directory, in this create a file called `docker-compose.yml` and add the following:
 
 ```yml
 version: "3.3"
@@ -44,12 +37,28 @@ services:
     ports:
       - "1433:1433"
 ```
-- Save change and run in terminal
-```bash
+now open a terminal and navigate to the directory where you created the file and run:
+
+```sh
 docker-compose up
 ```
-The first time, this may take several minutes, when you see that the services are ready open the following URL in the browser http://localhost:3000 and enjoy.
+Wait a few minutes while the dependencies are downloaded, the services are configured and when you see that the services are ready go to the browser and go to http://localhost:3000
 
+### docker
+
+If you prefer you can also use the container without docker-compose:
+
+```sh
+docker run \
+    --name demo \
+    -p 3000:80 \
+    -e "APP_RUN_DELAY=<time in ms>" \
+    -e "SQLSERVER=<string connection>" \
+    -e "WEATHER_KEY_API=<your api key>" \
+    -e "NEWS_KEY_API=<your api key>" \
+    -d \
+    mapineda48/climate
+```
 ### local environment
 
 Make sure you have installed [.NET 5 or newer](https://get.dot.net), [Nodejs 14.x](https://nodejs.org/es/), [Yarn](https://yarnpkg.com/) and set enviroment variables.
