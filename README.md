@@ -1,7 +1,3 @@
-# dotnet
+# Net Core
 
-Projects to play and learn [dotnet](https://dotnet.microsoft.com/).
-
-## About this repo
-
-- This repository contains multiple projects each with its respective README in the root.
+In this repository, personal projects on net core ended, without any special importance, they were with which I tried to strengthen my knowledge of the language.
