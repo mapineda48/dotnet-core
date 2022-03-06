@@ -1,5 +1,5 @@
 #https://hub.docker.com/_/microsoft-dotnet-sdk
-FROM mcr.microsoft.com/dotnet/sdk:5.0.403-buster-slim-amd64 AS builder
+FROM mcr.microsoft.com/dotnet/sdk:6.0.200-bullseye-slim-amd64 AS builder
 
 WORKDIR /home/builder
 
@@ -15,7 +15,7 @@ RUN bash ./install.sh && \
       -o ./dist
 
 #https://hub.docker.com/_/microsoft-dotnet-runtime-deps/
-FROM mcr.microsoft.com/dotnet/runtime-deps:5.0.12-alpine3.14-amd64
+FROM mcr.microsoft.com/dotnet/runtime-deps:6.0.2-alpine3.14-amd64
 
 RUN apk add icu-libs && \
     adduser \

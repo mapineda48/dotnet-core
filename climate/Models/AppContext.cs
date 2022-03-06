@@ -4,7 +4,13 @@ namespace Climate.Models
 {
     public class AppDbContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){
+            /*
+             * Warning
+             */
+            this.Database.EnsureCreated();
+            this.Database.Migrate();
+        }
         protected AppDbContext(){}
 
         public DbSet<History> Historys { get; set; }

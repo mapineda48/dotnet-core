@@ -36,10 +36,7 @@ builder.Services.AddSpaStaticFiles(configuration =>
                 configuration.RootPath = "ClientApp/build";
             });
 
-builder.Services.AddClimateContext(context =>
-{
-    context.Database.EnsureCreated();
-});
+builder.Services.AddClimateContext();
 
 builder.Services.AddControllers()
     .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
