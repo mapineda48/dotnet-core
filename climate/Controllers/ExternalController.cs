@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Climate.Models;
+using System.Net.Http;
 
 namespace Climate.Controllers
 {
@@ -17,7 +18,7 @@ namespace Climate.Controllers
 
         private readonly string _keyNews = Environment.GetEnvironmentVariable("NEWS_KEY_API");
 
-        private readonly WebClient _webClient = new WebClient();
+        private readonly HttpClient httpClient = new HttpClient();
         public ExternalController(IConfiguration config, AppDbContext context)
         {
             _context = context;
@@ -56,9 +57,9 @@ namespace Climate.Controllers
 
 
             //Fetch the JSON string from URL.
-            string weather = await _webClient.DownloadStringTaskAsync($"https://api.openweathermap.org/data/2.5/weather?q={location}&appid={_keyWeather}");
+            string weather = await httpClient.GetStringAsync($"https://api.openweathermap.org/data/2.5/weather?q={location}&appid={_keyWeather}");
 
-            string news = await _webClient.DownloadStringTaskAsync($"https://newsapi.org/v2/top-headlines?q={location}&apiKey={_keyNews}"); ;
+            string news = await httpClient.GetStringAsync($"https://newsapi.org/v2/top-headlines?q={location}&apiKey={_keyNews}"); ;
 
             string data = $"{{\"news\":{news},\"weather\":{weather}}}";
 

@@ -4,10 +4,10 @@
 version: "3.3"
 services:
   web:
-    image: "mcr.microsoft.com/dotnet/sdk:5.0.403-buster-slim-amd64"
+    image: "mcr.microsoft.com/dotnet/sdk:6.0.200-bullseye-slim-amd64"
     tty: true
     environment:
-      SQLSERVER: "Server=db;User Id=sa;Password=Mypassword12345*;Encrypt=false;Trusted_Connection=False;"
+      SQLSERVER: "Server=db;Database=climate;User Id=sa;Password=Mypassword12345*;Encrypt=false;Trusted_Connection=False;"
       WEATHER_KEY_API: "a7755af4a16dd20bba3ce4166cffc018"
       NEWS_KEY_API: "97fd826a38004befbadef494cd9cc8fc"
     ports:

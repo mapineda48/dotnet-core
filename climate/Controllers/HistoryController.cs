@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Climate.Models;
@@ -21,6 +22,8 @@ namespace Climate.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<History>>> Gethistory()
         {
+            var rows = await (from h in _context.Historys select h).ToListAsync();
+
             return await _context.Historys.ToListAsync();
         }
 
