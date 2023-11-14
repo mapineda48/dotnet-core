@@ -1,0 +1,37 @@
+version: "3"
+
+services:
+  app:
+    image: "mcr.microsoft.com/dotnet/sdk:6.0.200-bullseye-slim-amd64"
+    tty: true
+    environment:
+      # Production
+      # DATABASE_CONNECTION: "Server=db;Database=Agape;User Id=sa;Password=Mypassword12345*;Encrypt=false;Trusted_Connection=False;"
+      
+      # Developer
+      DATABASE_CONNECTION: "Server=db;Database=Agape;User Id=postgres;Password=mypassword;"
+      STORAGE_URL: "http://minio:minio123@minio:9000"
+    volumes:
+      - "..:/home/agape"
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+  minio:
+    image: minio/minio:RELEASE.2023-07-07T07-13-57Z
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+    command: server --console-address ":9090" /data
+    ports:
+      - 9000:9000
+      - 9090:9090
+  # db:
+  #   image: "mcr.microsoft.com/mssql/server:2019-CU13-ubuntu-20.04"
+  #   environment:
+  #     ACCEPT_EULA: "Y"
+  #     SA_PASSWORD: "Mypassword12345*"
+  db:
+    image: "postgres:14"
+    environment:
+      POSTGRES_PASSWORD: "mypassword"

@@ -1,0 +1,39 @@
+﻿@page "/"
+@inject Agape.Storage.IStorageService storageService
+@inject Agape.Models.AppDbContext db;
+
+<PageTitle>Index</PageTitle>
+
+@* <h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" /> *@
+
+
+<EditForm Model="@user" OnValidSubmit="@OnSubmit">
+    <InputText @bind-Value="user.Username" />
+    <InputText @bind-Value="user.Email" />
+    <InputFile OnChange="@OnInputFileChange" />
+    <button type="submit">Subir Archivo</button>
+</EditForm>
+
+@code {
+    private Agape.Models.User user = new Agape.Models.User();
+    private IBrowserFile? selectedFile;
+
+    private void OnInputFileChange(InputFileChangeEventArgs e) { selectedFile = e.File; }
+
+    private async Task OnSubmit()
+    {
+        if (selectedFile is null)
+        {
+            return;
+        }
+
+        user.ImageUrl = await storageService.SaveInputFileAsync(selectedFile);
+
+        await db.Users.AddAsync(user);
+        await db.SaveChangesAsync();
+    }
+}
